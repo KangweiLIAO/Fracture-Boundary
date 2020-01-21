@@ -2171,6 +2171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4719049037737126}
   - component: {fileID: 95896253531957654}
+  - component: {fileID: 114287314034427512}
   m_Layer: 0
   m_Name: Character_Rich_Female_01
   m_TagString: Untagged
@@ -2232,6 +2233,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114287314034427512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446013417251954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9275672c6fa5e5546a53b598a2b9108b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 0
 --- !u!1 &1506870286736772
 GameObject:
   m_ObjectHideFlags: 0

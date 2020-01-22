@@ -770,10 +770,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4016517212831504}
   - component: {fileID: 95437959242911452}
+  - component: {fileID: 143331110073078788}
+  - component: {fileID: 114492537050516002}
   - component: {fileID: 114238969123385208}
   m_Layer: 0
   m_Name: Character_Rich_Male_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -832,6 +834,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!143 &143331110073078788
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310975978534768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.8
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.05
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &114492537050516002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310975978534768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a27021829e76e43b0fee0a35ea1082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 1
+  lockCursor: 0
 --- !u!114 &114238969123385208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +878,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9275672c6fa5e5546a53b598a2b9108b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 0
+  walkSpeed: 1
+  runSpeed: 3
+  currentSpeed: 1
+  jumpSpeed: 6
+  rotateSpeed: 1
+  gravity: 9.8
+  walking: 0
+  running: 0
+  idling: 0
+  jumping: 0
+  backrunning: 0
 --- !u!1 &1358332854592852
 GameObject:
   m_ObjectHideFlags: 0

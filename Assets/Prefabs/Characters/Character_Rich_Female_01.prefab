@@ -2171,10 +2171,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4719049037737126}
   - component: {fileID: 95896253531957654}
+  - component: {fileID: 143233538094912538}
+  - component: {fileID: 114916756289706948}
   - component: {fileID: 114287314034427512}
   m_Layer: 0
   m_Name: Character_Rich_Female_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2233,6 +2235,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!143 &143233538094912538
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446013417251954}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.8
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.05
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &114916756289706948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446013417251954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a27021829e76e43b0fee0a35ea1082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 1
+  lockCursor: 0
 --- !u!114 &114287314034427512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2245,7 +2279,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9275672c6fa5e5546a53b598a2b9108b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 0
+  walkSpeed: 1
+  runSpeed: 3
+  currentSpeed: 1
+  jumpSpeed: 6
+  rotateSpeed: 1
+  gravity: 9.8
+  walking: 0
+  running: 0
+  idling: 0
+  jumping: 0
+  backrunning: 0
 --- !u!1 &1506870286736772
 GameObject:
   m_ObjectHideFlags: 0

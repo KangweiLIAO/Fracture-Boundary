@@ -4,107 +4,133 @@ using UnityEngine;
 
 public class MovementControl : MonoBehaviour
 {
-    public int speed = 1;
-    public int rotateSpeed = 3;
+    // public vars
+    public float walkSpeed;
+    public float runSpeed;
+    public float currentSpeed;
+    public float jumpSpeed;
+    public float rotateSpeed;
+    public float gravity;
+    public bool walking;
+    public bool running;
+    public bool idling;
+    public bool jumping;
+    public bool backrunning;
 
+    // private vars
+
+    // components
     private Animator animator;
     private CharacterController controller;
     private Vector3 moveDirection;
-    private  float gravity;
-    private bool walking;
-    private bool running;
-
-    private int directionState;
-    private int lastDirectionState;
 
     // Start is called before the first frame update
     void Start()
     {
-        gravity = 9;
+        idling = true;
+        walking = running = false;
+        currentSpeed = walkSpeed;
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Movement();
     }
 
     void Movement()
     {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
         if (controller.isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            // transform.Rotate(horizontalInput * rotateSpeed, 0, verticalInput * rotateSpeed);
+            moveDirection = new Vector3(horizontalInput , 0, verticalInput);
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= currentSpeed;
+
+            // Run
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                if (running) animator.SetTrigger("Run01");
-                else
-                {
-                    animator.SetTrigger("Walk01");
-                    walking = true;
-                }
-            } else if (Input.GetKeyUp(KeyCode.W)) {
-                if (!running) animator.SetTrigger("Idle01");
-                walking = false;
+                currentSpeed = runSpeed;
+                setAllMovement(false);
+                running = true;
             }
 
+            // Run back
             if (Input.GetKeyDown(KeyCode.S))
             {
-                speed = 2;
-                walking = false;
-                animator.SetTrigger("RunBack01");
-            } else if (Input.GetKeyUp(KeyCode.S)) {
-                speed =  1;
-                if (!running) animator.SetTrigger("Idle01");
+                currentSpeed = walkSpeed+1;
+                setAllMovement(false);
+                backrunning = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
+            // Jump
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (running) animator.SetTrigger("Run01");
-                else
+                moveDirection.y += jumpSpeed;
+                if (running)
                 {
-                    animator.SetTrigger("Walk01");
-                    walking = true;
-                }
-            } else if (Input.GetKeyUp(KeyCode.A)) {
-                if (!running) animator.SetTrigger("Idle01");
-                walking = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                if (running) animator.SetTrigger("Run01");
-                else
-                {
-                    animator.SetTrigger("Walk01");
-                    walking = true;
-                }
-            } else if (Input.GetKeyUp(KeyCode.D)) {
-                if (!running) animator.SetTrigger("Idle01");
-                walking = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift) && walking) 
-            {
-                if (!Input.GetKeyDown(KeyCode.S))
-                {
-                    speed = 3;
+                    setAllMovement(false);
                     running = true;
-                    walking = false;
-                    animator.SetTrigger("Run01");
-                }
-            }else if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                if (!Input.GetKeyDown(KeyCode.S))
-                {
-                    speed = 1;
-                    running = false;
-                    animator.SetTrigger("Idle01");
-                }
+                }else setAllMovement(false);
+                jumping = true;
+            }
+            
+            // Walking detection
+            if ((Mathf.Abs(horizontalInput) >= 0.01 || Mathf.Abs(verticalInput) >= 0.01) && (!running && !backrunning && !jumping))
+            {
+                setAllMovement(false);
+                walking = true;
+            }
+            if ((Mathf.Abs(horizontalInput) <= 0.01 && Mathf.Abs(verticalInput) <= 0.01) && (!backrunning && !jumping))
+            {
+                setAllMovement(false);
+                idling = true;
+            }
+
+            // Animation controls:
+            StopAllAnimation();
+            if (idling) animator.SetBool("Idle1", true);
+            else if (walking) animator.SetBool("Walk1", true);
+            else if (running) animator.SetBool("Run1", true);
+            else if (backrunning) animator.SetBool("Runback1", true);
+            if (jumping)
+            {
+                StopAllAnimation();
+                animator.SetBool("Jump1", true);
+                jumping = false;
             }
         }
-        moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, 0, Input.GetAxis("Vertical") * speed);
-        moveDirection = transform.TransformDirection(moveDirection);
+        moveDirection.y -= gravity * Time.deltaTime;     //gravity
         controller.Move(moveDirection * Time.deltaTime);
-        transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            currentSpeed = walkSpeed;
+            running = false;
+        }
+        if (Input.GetKeyUp(KeyCode.S)) backrunning = false;
+    }
+
+    void setAllMovement(bool state)
+    {
+        walking = state;
+        running = state;
+        idling = state;
+        jumping = state;
+        backrunning = state;
+    }
+
+    void StopAllAnimation()
+    {
+        animator.SetBool("Walk1", false);
+        animator.SetBool("Run1", false);
+        animator.SetBool("Runback1", false);
+        animator.SetBool("Idle1", false);
+        animator.SetBool("Jump1", false);
     }
 }

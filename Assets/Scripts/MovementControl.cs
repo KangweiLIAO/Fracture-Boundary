@@ -5,10 +5,10 @@ using UnityEngine;
 public class MovementControl : MonoBehaviour
 {
     // public vars
-    public int walkSpeed = 1;
-    public int rotateSpeed = 4;
-    public int jumpSpeed = 100;
-    public float gravity = 9;
+    public float walkSpeed;
+    public float rotateSpeed;
+    public float jumpSpeed;
+    public float gravity;
     public bool walking;
     public bool running;
     public bool idling;
@@ -57,7 +57,8 @@ public class MovementControl : MonoBehaviour
                 walkSpeed = 3;
                 setAllMovement(false);
                 running = true;
-            } else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift)) {
                 walkSpeed = 1;
                 running = false;
             }
@@ -69,24 +70,27 @@ public class MovementControl : MonoBehaviour
                 setAllMovement(false);
                 backrunning = true;
             }
-            else if (Input.GetKeyUp(KeyCode.S)) backrunning = false;
+            if (Input.GetKeyUp(KeyCode.S)) backrunning = false;
 
             // Jump
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 moveDirection.y += jumpSpeed;
-                setAllMovement(false);
+                if (running)
+                {
+                    setAllMovement(false);
+                    running = true;
+                }else setAllMovement(false);
                 jumping = true;
             }
-            else if (Input.GetKeyUp(KeyCode.Space)) jumping = false;
-
+            
             // Walking detection
             if ((Mathf.Abs(horizontalInput) >= 0.01 || Mathf.Abs(verticalInput) >= 0.01) && (!running && !backrunning && !jumping))
             {
                 setAllMovement(false);
                 walking = true;
             }
-            if (Mathf.Abs(horizontalInput) <= 0.1 && Mathf.Abs(verticalInput) <= 0.1)
+            if (Mathf.Abs(horizontalInput) <= 0.01 && Mathf.Abs(verticalInput) <= 0.01 && (!backrunning && !jumping))
             {
                 setAllMovement(false);
                 idling = true;
@@ -94,25 +98,15 @@ public class MovementControl : MonoBehaviour
 
             // Animation controls:
             StopAllAnimation();
-            if (idling)
-            {
-                animator.SetBool("Idle1", true);
-            }
-            if (walking)
-            {
-                animator.SetBool("Walk1", true);
-            }
-            if (running)
-            {
-                animator.SetBool("Run1", true);
-            }
-            if (backrunning)
-            {
-                animator.SetBool("Runback1", true);
-            }
+            if (idling) animator.SetBool("Idle1", true);
+            else if (walking) animator.SetBool("Walk1", true);
+            else if (running) animator.SetBool("Run1", true);
+            else if (backrunning) animator.SetBool("Runback1", true);
             if (jumping)
             {
+                StopAllAnimation();
                 animator.SetBool("Jump1", true);
+                jumping = false;
             }
         }
         moveDirection.y -= gravity * Time.deltaTime;     //gravity

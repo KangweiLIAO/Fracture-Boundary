@@ -114,6 +114,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9275672c6fa5e5546a53b598a2b9108b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 1
+  rotateSpeed: 2.5
+  jumpSpeed: 6
+  gravity: 9.8
+  walking: 0
+  running: 0
+  idling: 0
+  jumping: 0
+  backrunning: 0
 --- !u!1 &1027719268642640
 GameObject:
   m_ObjectHideFlags: 0

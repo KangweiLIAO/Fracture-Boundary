@@ -47,7 +47,7 @@ public class MovementControl : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            transform.Rotate(Input.GetAxis("Horizontal") * rotateSpeed, 0, Input.GetAxis("Vertical") * rotateSpeed);
+            // transform.Rotate(Input.GetAxis("Horizontal") * rotateSpeed, 0, Input.GetAxis("Vertical") * rotateSpeed);
             moveDirection = new Vector3(horizontalInput , 0, verticalInput);
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= currentSpeed;
@@ -59,10 +59,6 @@ public class MovementControl : MonoBehaviour
                 setAllMovement(false);
                 running = true;
             }
-            if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                currentSpeed = walkSpeed;
-                running = false;
-            }
 
             // Run back
             if (Input.GetKeyDown(KeyCode.S))
@@ -71,7 +67,6 @@ public class MovementControl : MonoBehaviour
                 setAllMovement(false);
                 backrunning = true;
             }
-            if (Input.GetKeyUp(KeyCode.S)) backrunning = false;
 
             // Jump
             if (Input.GetKeyDown(KeyCode.Space))
@@ -112,6 +107,13 @@ public class MovementControl : MonoBehaviour
         }
         moveDirection.y -= gravity * Time.deltaTime;     //gravity
         controller.Move(moveDirection * Time.deltaTime);
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            currentSpeed = walkSpeed;
+            running = false;
+        }
+        if (Input.GetKeyUp(KeyCode.S)) backrunning = false;
     }
 
     void setAllMovement(bool state)

@@ -47,7 +47,7 @@ public class MovementControl : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            // transform.Rotate(Input.GetAxis("Horizontal") * rotateSpeed, 0, Input.GetAxis("Vertical") * rotateSpeed);
+            // transform.Rotate(horizontalInput * rotateSpeed, 0, verticalInput * rotateSpeed);
             moveDirection = new Vector3(horizontalInput , 0, verticalInput);
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= currentSpeed;
@@ -86,7 +86,7 @@ public class MovementControl : MonoBehaviour
                 setAllMovement(false);
                 walking = true;
             }
-            if (Mathf.Abs(horizontalInput) <= 0.01 && Mathf.Abs(verticalInput) <= 0.01 && (!backrunning && !jumping))
+            if ((Mathf.Abs(horizontalInput) <= 0.01 && Mathf.Abs(verticalInput) <= 0.01) && (!backrunning && !jumping))
             {
                 setAllMovement(false);
                 idling = true;

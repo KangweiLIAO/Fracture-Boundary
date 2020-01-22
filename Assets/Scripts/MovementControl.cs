@@ -6,8 +6,10 @@ public class MovementControl : MonoBehaviour
 {
     // public vars
     public float walkSpeed;
-    public float rotateSpeed;
+    public float runSpeed;
+    public float currentSpeed;
     public float jumpSpeed;
+    public float rotateSpeed;
     public float gravity;
     public bool walking;
     public bool running;
@@ -16,7 +18,6 @@ public class MovementControl : MonoBehaviour
     public bool backrunning;
 
     // private vars
-
 
     // components
     private Animator animator;
@@ -28,13 +29,13 @@ public class MovementControl : MonoBehaviour
     {
         idling = true;
         walking = running = false;
-
+        currentSpeed = walkSpeed;
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Movement();
     }
@@ -46,27 +47,27 @@ public class MovementControl : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            transform.Rotate(0, horizontalInput * rotateSpeed, 0);
-            moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+            transform.Rotate(Input.GetAxis("Horizontal") * rotateSpeed, 0, Input.GetAxis("Vertical") * rotateSpeed);
+            moveDirection = new Vector3(horizontalInput , 0, verticalInput);
             moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= walkSpeed;
+            moveDirection *= currentSpeed;
 
             // Run
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                walkSpeed = 3;
+                currentSpeed = runSpeed;
                 setAllMovement(false);
                 running = true;
             }
             if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                walkSpeed = 1;
+                currentSpeed = walkSpeed;
                 running = false;
             }
 
             // Run back
             if (Input.GetKeyDown(KeyCode.S))
             {
-                walkSpeed = 2;
+                currentSpeed = walkSpeed+1;
                 setAllMovement(false);
                 backrunning = true;
             }

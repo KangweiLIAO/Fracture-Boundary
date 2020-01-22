@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     // public vars
-    public float rotateSpeed;
-    public bool lockCursor;
+    public float rotateSpeed = 3f;
+    public bool lockCursor = true;
 
     // private vars
     private Vector3 offset;

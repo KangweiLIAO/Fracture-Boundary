@@ -5,19 +5,19 @@ using UnityEngine;
 public class MovementControl : MonoBehaviour
 {
     // public vars
-    public float walkSpeed;
-    public float runSpeed;
-    public float currentSpeed;
-    public float jumpSpeed;
-    public float rotateSpeed;
-    public float gravity;
-    public bool walking;
-    public bool running;
-    public bool idling;
-    public bool jumping;
-    public bool backrunning;
+    public float walkSpeed = 5f;
+    public float runSpeed = 8f;
+    public float currentSpeed = 5f;
+    public float jumpSpeed = 6f;
+    public float rotateSpeed = 3f;
+    public float gravity = 9.8f;
 
     // private vars
+    private bool walking = false;
+    private bool running = false;
+    private bool idling = true;
+    private bool jumping;
+    private bool backrunning;
 
     // components
     private Animator animator;
@@ -27,9 +27,6 @@ public class MovementControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        idling = true;
-        walking = running = false;
-        currentSpeed = walkSpeed;
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
     }

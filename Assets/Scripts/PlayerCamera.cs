@@ -21,6 +21,7 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // get axies x movement
         offset += new Vector3(0, Input.GetAxis("Mouse X"), 0) * rotateSpeed;
         transform.eulerAngles = offset;
         if (lockCursor && Input.GetMouseButtonUp(0))
